@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard :: Charts</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+
+        <script src="{{ url_for('static',filename='assets/js/Chart.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/js/utils.js')}}"></script>
+
+
+
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+                    <div class="dashborad-v" id="main_div">
+
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">Charts</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Charts | India</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <!-- end page title end breadcrumb -->
+
+                             <div class="row">
+
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" >  INDIA : Month Wise</h5>
+                                            <form class="mb-0">
+                                                <div class="form-group bmd-form-group is-filled">
+                                                <label for="exampleSelect1" class="bmd-label-floating">Select Month : </label>
+                                                <select class="form-control" id="stateName" onchange="if (this.value) window.location.href='charts/'+this.value">
+                                                    <option>None</option>
+                                                    {% for month in months %}
+                                                <option value="{{month}}">{{month}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                <!-- content -->
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+         <script src="{{ url_for('static',filename='assets/plugins/d3/d3.min.js') }}"></script>
+
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+        <script src="{{ url_for('static',filename='assets/plugins/chart.js/chart.min.js') }}"></script>
+            <script src="{{ url_for('static',filename='assets/js/utils.js') }}"></script>
+            <script src="{{ url_for('static',filename='assets/pages/chartjs.init.js')}}"></script>
+
+
+
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+       
+    </body>
+
+</html>

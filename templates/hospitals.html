@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard :: Hospitals</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+        <!--Morris Chart CSS -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/chartist/css/chartist.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/morris/morris.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.theme.default.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+<style>
+.notfound{
+  display: none;
+}
+#HospitalDataDiv {
+  display:none;
+}
+</style>
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+                    <div class="dashborad-v" id="main_div">
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">Dashboard</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Dashboard | Hospitals</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <!-- end page title end breadcrumb -->
+
+
+                                <div class="row">
+
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" > Hospitals</h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="row">
+                                    <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30 text-white card-success">
+                                        <div class="card-body">
+                                            <h3 class="card-title font-20 mt-0">Rural</h3>
+                                            <blockquote class="card-bodyquote">
+                                                <p>Hospitals : <strong>{{ruralHospitals | numberFormat}}</strong></p>
+                                            </blockquote>
+                                            <blockquote class="card-bodyquote">
+                                                <p>Beds : <strong>{{ruralBeds | numberFormat}}</strong></p>
+                                            </blockquote>
+                                            <h3 class="card-title font-20 mt-0">Urban</h3>
+                                            <blockquote class="card-bodyquote">
+                                                <p>Hospitals : <strong>{{urbanHospitals | numberFormat}}</strong></p>
+                                            </blockquote>
+                                            <blockquote class="card-bodyquote">
+                                                <p>Beds : <strong>{{urbanBeds | numberFormat}}</strong></p>
+                                            </blockquote>
+                                            <hr>
+                                             <blockquote class="card-bodyquote">
+                                               Total Hospitals : <strong>{{totalHospitals | numberFormat}}</strong><br>
+                                                 Total Beds : <strong>{{totalBeds | numberFormat}}</strong>
+                                            </blockquote>
+                                            <hr>
+                                             <blockquote class="card-bodyquote">
+                                               Source : <strong><a href="{{source}}" target="_blank" style="color:#ffffff;">{{source}}</a></strong><br>
+                                                 Last Updated : <strong>{{lastUpdated}}</strong>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                        <a href="/medicalColleges"><button type="button" class="btn btn-outline-primary">Medical Collges</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="row">
+
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" > States</h5>
+                                            <form class="mb-0">
+                                                <div class="form-group bmd-form-group is-filled">
+                                                <label for="stateName" class="bmd-label-floating">Select State : </label>
+                                                <select class="form-control" id="stateName" onchange="javascript:stateSelect(this.value);">
+                                                    <option value="None">None</option>
+                                                    {% for state in states %}
+                                                <option value="{{state}}">{{state}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="HospitalDataDiv">
+                               <div class="col-md-12 col-lg-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h4 class="mt-0 header-title">Hospital Data</h4>
+                                            <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                 <div class="card">
+                                                    <div class="card-header" role="tab" id="heading_state">
+                                                        <h5 class="mb-0 mt-0 font-16">
+                                                            <a class="text-dark collapsed" data-toggle="collapse" data-parent="#state" href="#collapse_state" aria-expanded="false" aria-controls="collapse_state">
+                                                                <font color="black"><div id="stateDatName"></div></font><div class="float-right"><em class="mdi mdi-arrow-down-bold-hexagon-outline"></em></div>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse_state" class="collapse" role="tabpanel" aria-labelledby="heading_state" style="">
+                                        <table class="table table-hover mb-0">
+                                                            <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Rural Hospitals</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="ruralHospitals"></div>
+                                                            </td>
+                                                        </tr>
+                                                                <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Rural Beds</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="ruralBeds"></div>
+                                                            </td>
+                                                        </tr>
+                                                         <tr class="table-success">
+                                                            <td>
+                                                                <b><a><font color="green" >Urban Hospitals</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="urbanHospitals"></div>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                      <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Urban Beds</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="urbanBeds"></div>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Total Hospitals</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="totalHospitals"></div>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Total Beds</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="totalBeds"></div>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                <tr class="table-success">
+                                                            <td>
+                                                               <b><a><font color="green" >Last Updated</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                <div id="asOn"></div>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- container -->
+
+                    </div>
+                    <!-- Page content Wrapper -->
+                </div>
+                <!-- content -->
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+
+        <script src= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/raphael/raphael.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/morris/morris.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/pages/dashborad.js') }}"></script>
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+            <script>
+                 $('#stateName').on('change', function () {
+                    if(this.value === "None"){
+                        $("#HospitalDataDiv").hide();
+                    } else {
+                        $("#HospitalDataDiv").show();
+                    }
+                });
+            </script>
+<script>
+    function stateSelect(state)
+    {
+        if(state === "None")
+        {
+            console.log("No state selected");
+        }
+        else
+        {
+        jsonData = JSON.parse({{stateJson| tojson | safe}});
+        document.getElementById('stateDatName').innerHTML = state;
+        document.getElementById('ruralHospitals').innerHTML = jsonData[state]['ruralHospitals'];
+        document.getElementById('ruralBeds').innerHTML = jsonData[state]['ruralBeds'];
+        document.getElementById('urbanHospitals').innerHTML = jsonData[state]['urbanHospitals'];
+        document.getElementById('urbanBeds').innerHTML = jsonData[state]['urbanBeds'];
+        document.getElementById('totalHospitals').innerHTML = "<strong>"+jsonData[state]['totalHospitals']+"</strong>";
+        document.getElementById('totalBeds').innerHTML = "<strong>"+jsonData[state]['totalBeds']+"</strong>";
+        document.getElementById('asOn').innerHTML = jsonData[state]['asOn'];
+        }
+    }
+</script>
+
+    </body>
+
+
+</html>

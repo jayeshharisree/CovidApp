@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard :: Districts</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+        <!--Morris Chart CSS -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/chartist/css/chartist.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/morris/morris.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.theme.default.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/plugins/alertify/css/alertify.css') }}" >
+
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+                    <div class="dashborad-v" id="main_div">
+
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">Kerala</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Kerala Dashboard : Districts</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+
+                            <!-- end page title end breadcrumb -->
+
+                            <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" >  Kerala</h5>
+                                            Last Updated at <b>{{lastUpdate}}</b><br><br>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row">
+                               <div class="col-md-12 col-lg-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h4 class="mt-0 header-title">Districts</h4>
+                                            <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                {% for district in districtData %}
+                                                 <div class="card">
+                                                    <div class="card-header" role="tab" id="heading{{district}}">
+                                                        <h5 class="mb-0 mt-0 font-16">
+                                                            <a class="text-dark collapsed" data-toggle="collapse" data-parent="#{{district}}" href="#collapse{{district}}" aria-expanded="false" aria-controls="collapse{{district}}">
+                                                                <font color="black">{{district}}</font><div class="float-right"><em class="mdi mdi-arrow-down-bold-hexagon-outline"></em></div>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse{{district}}" class="collapse" role="tabpanel" aria-labelledby="heading{{district}}" style="">
+                                                        <div class="card-body">
+
+                                                            <table class="table table-hover mb-0">
+                                                            <tr class="table-warning">
+                                                            <td>
+                                                               <b><a><font color="red" >Confirmed</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['confirmed'] | numberFormat }} <font color="red" size="1px"> {{districtData[district]['deltaConfirmed'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                        </tr>
+                                                                <tr class="table-info">
+                                                            <td>
+                                                               <b><a><font color="#2196f3" >Active</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['active'] | numberFormat }} <font color="green" size="1px">{{districtData[district]['deltaActive'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                        </tr>
+                                                         <tr class="table-success">
+                                                            <td>
+                                                                <b><a><font color="green" >Recovered</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['recovered'] | numberFormat }} <font color="green" size="1px"> {{districtData[district]['deltaRecovered'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                      <tr class="table-secondary">
+                                                            <td>
+                                                               <b><a><font color="#3f51b5" >Deceased</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['deceased'] | numberFormat }} <font color="blue" size="1px"> {{districtData[district]['deltaDeceased'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                                <tr class="table">
+                                                            <td>
+                                                               <b><a><font color="#0000FF" >Under Observation</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['under_observation'] | numberFormat }} <font color="blue" size="1px"> {{districtData[district]['deltaUnder_observation'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                         <tr>
+                                                            <td>
+                                                               <b><a><font color="#0000FF" >Hospital Isolation</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['hospital_isolation'] | numberFormat }} <font color="blue" size="1px"> {{districtData[district]['deltaHospital_isolation'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                      <tr>
+                                                            <td>
+                                                               <b><a><font color="#0000FF" >Home Isolation</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['home_isolation'] | numberFormat }} <font color="blue" size="1px"> {{districtData[district]['deltaHome_isolation'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                               <b><a><font color="#0000FF" >Hospitalized Today</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{districtData[district]['hospitalized_today'] | numberFormat }} <font color="blue" size="1px"> {{districtData[district]['deltaHospitalized_today'] | numberFormat }} <em class="mdi mdi-account-plus"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <!-- container -->
+
+                    </div>
+                    <!-- Page content Wrapper -->
+                </div>
+                <!-- content -->
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+         <script src="{{ url_for('static',filename='assets/plugins/alertify/js/alertify.js') }}"></script>
+        <script src="{{ url_for('static',filename='assets/pages/alertify-init.js') }}"></script>
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+
+        <script src= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/raphael/raphael.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/morris/morris.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/pages/dashborad.js') }}"></script>
+
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+       
+    </body>
+
+</html>

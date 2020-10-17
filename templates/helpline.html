@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard :: Helpline</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+        <!--Morris Chart CSS -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/chartist/css/chartist.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/morris/morris.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.theme.default.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+
+
+    </head>
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+        <!-- Begin page -->
+        <div id="wrapper">
+                    <div class="dashborad-v" id="main_div">
+
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">Helpline</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Dashboard | Helpline</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <!-- end page title end breadcrumb -->
+                            <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5><b>Primary</b></h5>
+                                            <table class="table table-striped mb-0">
+                                           <tr>
+                                            <td>Number</td><td>{{primaryNo}}</td>
+                                               </tr>
+                                                <tr><td>Toofree-Number</td><td>{{tollFree}}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Email</td> <td>{{email}}</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>Twitter</td> <td><a href="{{twitter}}" target="_blank"><img src="{{ url_for('static',filename='assets/images/twitter.png') }}" width="32px" height="32px"></a> </td>
+
+                                                </tr>
+                                                <tr>
+                                                   <td>Facebook</td> <td><a href="{{facebook}}" target="_blank"><img src="{{ url_for('static',filename='assets/images/facebook.png') }}" width="32px" height="32px"></a> </td>
+
+                                                </tr>
+                                         </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5><b>Helpline Numbers</b></h5>
+                                             <table class="table table-striped mb-0">
+                                            <thead class="table-success">
+                                            <td>State</td>
+                                            <td>Number</td>
+                                            </thead>
+                                            {% for state in stateData %}
+                                                <tr>
+                                              <td>{{state}}</td>
+                                              <td>{{stateData[state]['number']}}</td>
+                                                    </tr>
+                                            {% endfor %}
+                                         </table>
+
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!-- container -->
+
+                    </div>
+                    <!-- Page content Wrapper -->
+                </div>
+                <!-- content -->
+
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+
+        <script src= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/raphael/raphael.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/morris/morris.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/pages/dashborad.js') }}"></script>
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+       
+    </body>
+
+</html>

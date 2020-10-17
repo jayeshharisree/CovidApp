@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+        <!--Morris Chart CSS -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/chartist/css/chartist.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/morris/morris.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.theme.default.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+
+
+    </head>
+    <body class="fixed-left" onload="dataLoad();">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+        <!-- Begin page -->
+        <div id="wrapper">
+                    <div class="dashborad-v" id="main_div">
+
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">Dashboard</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Dashboard | INDIA</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <!-- end page title end breadcrumb -->
+                            <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+                                                <div class="carousel-inner" role="listbox">
+                                                    <div class="carousel-item active">
+                                                        <img class="d-block img-fluid" src="{{ url_for('static',filename='assets/images/slide/S1.png') }}" alt="First slide" width="45%" height="10%">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img class="d-block img-fluid" src="{{ url_for('static',filename='assets/images/slide/S2.png') }}" alt="First slide" width="45%" height="10%">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img class="d-block img-fluid" src="{{ url_for('static',filename='assets/images/slide/S3.png') }}" alt="First slide" width="45%" height="10%">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img class="d-block img-fluid" src="{{ url_for('static',filename='assets/images/slide/S4.png') }}" alt="First slide" width="45%" height="10%">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="row">
+                                <div class="col-sm-12 col-md-6 col-xl-3">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+
+                                                        <a class="btn btn-primary btn-raised dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Menu
+                                                        </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item"  href="/world">World</a>
+                                                        <a class="dropdown-item"  href="/states">States</a>
+                                                    <a class="dropdown-item"  href="/kerala">Kerala</a>
+                                                    <a class="dropdown-item"  href="/charts">Charts</a>
+                                                    <a class="dropdown-item"  href="/essentials">Essentials</a>
+                                                    <a class="dropdown-item"  href="/hospitals">Hospitals</a>
+                                                 <a class="dropdown-item"  href="/helpline">Helpline</a>
+                                                <a class="dropdown-item"  href="/contact">Contact Us</a>
+                                    <a class="dropdown-item"  href="/about">About Us</a>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" > INDIA</h5>
+                                            </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-info m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-multiple"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 text-center ml-auto align-self-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner"><div id="indTested"></div></h5>
+                                                        <p class="mb-0 ">Tested</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-xl-3">
+                                    <div class="card bg-danger m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-network"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner"><div id="indConfirmed"></div></h5><div id="indDeltaConfirmed"></div> <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0 ">Confirmed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-success m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round ">
+                                                        <i class="mdi mdi-account-check"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner"><div id="indRecovered"></div></h5><div id="indDeltaRecovered"></div> <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0 ">Recovered</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-primary m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-multiple-minus"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner"><div id="indDeceased"></div></h5><div id="indDeltaDeaths"></div> <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0">Deceased</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+
+                                            <h4 class="mt-0 header-title">WORLD TODAY</h4>
+
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-pills nav-justified" role="tablist">
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link active show" data-toggle="tab" href="#home-2" role="tab" aria-selected="true">NEW CASES</a>
+                                                </li>
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link" data-toggle="tab" href="#profile-2" role="tab" aria-selected="false">NEW DECEASES</a>
+                                                </li>
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link" data-toggle="tab" href="#messages-2" role="tab" aria-selected="false">NEW RECOVERED</a>
+                                                </li>
+                                            </ul>
+
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                <div class="tab-pane pt-3 active show" id="home-2" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                       <div align="center"><strong style="font-size: 25px;"><div id="worldNewCases"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane pt-3" id="profile-2" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                        <div align="center"><strong style="font-size: 25px;"><div id="worldNewDeceases"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane pt-3" id="messages-2" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                        <div align="center"><strong style="font-size: 25px;"><div id="worldNewRecovered"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12 col-lg-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+
+                                            <h4 class="mt-0 header-title">WORLD</h4>
+
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-pills nav-justified" role="tablist">
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link active show" data-toggle="tab" href="#home-1" role="tab" aria-selected="true">TOTAL</a>
+                                                </li>
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link" data-toggle="tab" href="#messages-1" role="tab" aria-selected="false">RECOVERED</a>
+                                                </li>
+                                                <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link" data-toggle="tab" href="#settings-1" role="tab" aria-selected="false">DECEASED</a>
+                                                </li>
+                                            </ul>
+
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                <div class="tab-pane pt-3 active show" id="home-1" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                       <div align="center"><strong style="font-size: 25px;"><div id="worldTotal"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane pt-3" id="messages-1" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                    <div align="center"><strong style="font-size: 25px;"><div id="worldRecovered"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane pt-3" id="settings-1" role="tabpanel">
+                                                    <p class="font-14 mb-0">
+                                                    <div align="center"><strong style="font-size: 25px;"><div id="worldDeceased"></div></strong></div>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+
+                        </div>
+                        <!-- container -->
+
+                    </div>
+                    <!-- Page content Wrapper -->
+                </div>
+                <!-- content -->
+
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+
+        <script src= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/raphael/raphael.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/morris/morris.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/pages/dashborad.js') }}"></script>
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+
+    <script src= "{{ url_for('static',filename='assets/js/index.js') }}"></script>
+
+
+    <script>
+    function dataLoad()
+    {
+        if (window.navigator.geolocation) {
+         window.navigator.geolocation.getCurrentPosition(console.log, console.log);
+        }
+        const successfulLookup = position => {
+          const { latitude, longitude } = position.coords;
+          fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=1234`)
+            .then(response => response.json())     .then(console.log);
+
+            window.navigator.geolocation.getCurrentPosition(successfulLookup, console.log);
+            results[0].formatted;
+    }
+    </script>
+
+
+
+    </body>
+
+</html>

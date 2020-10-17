@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>COVID19 Dashboard :: States</title>
+        <meta content="COVID19 Dashboard" name="description" />
+        <meta content="Internet Architects" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <link rel="shortcut icon" href= "{{ url_for('static',filename='assets/images/corona.png') }}">
+
+        <!--Morris Chart CSS -->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/chartist/css/chartist.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/morris/morris.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/carousel/owl.theme.default.min.css') }}">
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/plugins/animate/animate.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/bootstrap-material-design.min.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/style.css') }}">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/plugins/alertify/css/alertify.css') }}" >
+
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+                    <div class="dashborad-v" id="main_div">
+
+                        <div class="container-fluid"><br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">COVID19</a></li>
+                                                <li class="breadcrumb-item active">States</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">States Dashboard : {{state}}</h4>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+
+                            <!-- end page title end breadcrumb -->
+                             <div class="row">
+
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" >  States</h5>
+                                            <form class="mb-0">
+                                                <div class="form-group bmd-form-group is-filled">
+                                                <label for="exampleSelect1" class="bmd-label-floating">Select your state : </label>
+                                                <select class="form-control" id="stateName" onchange="if (this.value) window.location.href='../states/'+this.value">
+                                                    <option>None</option>
+                                                    {% for state in stateData %}
+                                                    {% if state != "Total" %}
+                                                <option value="{{state}}">{{state}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            {% for state in stateContent %}
+                                            <h5 class="header-title mb-3 mt-0"><img src="{{ url_for('static',filename='assets/images/corona.png') }}" alt="" width="10%" height="10%" >  {{stateName}}</h5>
+                                            Last Updated at <b>{{stateContent[state]['lastupdatedtime']}}</b><br><br>
+                                            <strong>State Update</strong> : {{stateContent[state]['statenotes']}}
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-xl-3">
+                                    <div class="card bg-danger m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-network"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner">{{stateContent[state]['confirmed'] | numberFormat }}</h5>{{stateContent[state]['deltaconfirmed'] | numberFormat }} <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0 ">Confirmed</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-info m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-multiple"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 text-center ml-auto align-self-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner">{{stateContent[state]['active'] | numberFormat }}</h5>
+                                                        <p class="mb-0 ">Active</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-success m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round ">
+                                                        <i class="mdi mdi-account-check"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner">{{stateContent[state]['recovered'] | numberFormat }}</h5>{{stateContent[state]['deltarecovered'] | numberFormat }} <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0 ">Recovered</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                                <!-- Column -->
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                                    <div class="card bg-primary m-b-30">
+                                        <div class="card-body">
+                                            <div class="d-flex row">
+                                                <div class="col-3 align-self-center">
+                                                    <div class="round">
+                                                        <i class="mdi mdi-account-multiple-minus"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 ml-auto align-self-center text-center">
+                                                    <div class="m-l-10 text-white float-right">
+                                                        <h5 class="mt-0 round-inner">{{stateContent[state]['deaths'] | numberFormat }}</h5>{{stateContent[state]['deltadeaths'] | numberFormat }} <em class="mdi mdi-arrow-up"></em>
+                                                        <p class="mb-0">Deceased</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+                            </div>
+
+                            <div class="row">
+                               <div class="col-md-12 col-lg-12 col-xl-6">
+                                    <div class="card m-b-30">
+                                        <div class="card-body">
+                                            <h4 class="mt-0 header-title">Districts</h4>
+                                            <div id="accordion" role="tablist" aria-multiselectable="true">
+                                                {% for district in stateContent[state]['district'] %}
+                                                 <div class="card">
+                                                    <div class="card-header" role="tab" id="heading{{district}}">
+                                                        <h5 class="mb-0 mt-0 font-16">
+                                                            <a class="text-dark collapsed" data-toggle="collapse" data-parent="#{{district}}" href="#collapse{{district}}" aria-expanded="false" aria-controls="collapse{{district}}">
+                                                                <font color="black">{{district}}</font><div class="float-right"><em class="mdi mdi-arrow-down-bold-hexagon-outline"></em></div>
+                                                            </a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse{{district}}" class="collapse" role="tabpanel" aria-labelledby="heading{{district}}" style="">
+                                                        <div class="card-body">
+
+                                                            <table class="table table-hover mb-0">
+                                                            <tr class="table-warning">
+                                                            <td>
+                                                               <b><a><font color="red" >Confirmed</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{stateContent[state]['district'][district]['confirmed'] | numberFormat }} <font color="red" size="1px"> {{stateContent[state]['district'][district]['deltaconfirmed'] | numberFormat }}<em class="mdi mdi-arrow-up"></em></font>
+                                                            </td>
+                                                        </tr>
+                                                                <tr class="table-info">
+                                                            <td>
+                                                               <b><a><font color="#2196f3" >Active</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{stateContent[state]['district'][district]['active'] | numberFormat }}
+                                                            </td>
+                                                        </tr>
+                                                         <tr class="table-success">
+                                                            <td>
+                                                                <b><a><font color="green" >Recovered</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{stateContent[state]['district'][district]['recovered'] | numberFormat }} <font color="green" size="1px"> {{stateContent[state]['district'][district]['deltarecovered'] | numberFormat }}<em class="mdi mdi-arrow-up"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                      <tr class="table-secondary">
+                                                            <td>
+                                                               <b><a><font color="#3f51b5" >Deceased</font></a></b>
+                                                            </td>
+                                                            <td>
+                                                                {{stateContent[state]['district'][district]['deceased'] | numberFormat }} <font color="blue" size="1px"> {{stateContent[state]['district'][district]['deltadeceased'] | numberFormat }}<em class="mdi mdi-arrow-up"></em></font>
+                                                            </td>
+                                                            </td>
+                                                        </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                                {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <!-- container -->
+
+                    </div>
+                    <!-- Page content Wrapper -->
+                </div>
+                <!-- content -->
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+         <script src="{{ url_for('static',filename='assets/plugins/alertify/js/alertify.js') }}"></script>
+        <script src="{{ url_for('static',filename='assets/pages/alertify-init.js') }}"></script>
+        <!-- jQuery  -->
+        <script src= "{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/popper.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/bootstrap-material-design.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/modernizr.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/detect.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/fastclick.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.slimscroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.blockUI.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/waves.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.nicescroll.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/js/jquery.scrollTo.min.js') }}"></script>
+
+
+        <script src= "{{ url_for('static',filename='assets/plugins/carousel/owl.carousel.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/fullcalendar/vanillaCalendar.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/metro/MetroJs.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/raphael/raphael.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/plugins/morris/morris.min.js') }}"></script>
+        <script src= "{{ url_for('static',filename='assets/pages/dashborad.js') }}"></script>
+
+
+        <!-- App js -->
+        <script src= "{{ url_for('static',filename='assets/js/app.js') }}"></script>
+       
+    </body>
+
+</html>

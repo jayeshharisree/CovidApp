@@ -1,0 +1,107 @@
+<!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+                    <i class="mdi mdi-close"></i>
+                </button>
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <!--<a href="index.html" class="logo"><i class="mdi mdi-assistant"></i> Urora</a>-->
+                        <a href="/" class="logo">
+                            <img src="{{ url_for('static',filename='assets/images/logo_b.png') }}" alt="" class="logo-large">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-inner slimscrollleft" id="sidebar-main">
+
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li class="menu-title">Main</li>
+
+                            <li>
+                                <a href="/" class="waves-effect">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span> Dashboard
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/world" class="waves-effect">
+                                    <i class="mdi mdi-google-maps"></i>
+                                    <span> World
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/states" class="waves-effect">
+                                    <i class="mdi mdi-home-map-marker"></i>
+                                    <span> States
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/charts" class="waves-effect">
+                                    <i class="mdi mdi-chart-areaspline"></i>
+                                    <span> Charts
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- end sidebarinner -->
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <!-- Top Bar Start -->
+                    <div class="topbar" id="topbar">
+
+                        <nav class="navbar-custom">
+                            <div class="dropdown notification-list nav-pro-img">
+
+                                <div class="list-inline-item hide-phone app-search">
+                                    <form role="search" class="">
+                                        <div class="form-group pt-1">
+                                            <input type="text" class="form-control" placeholder="Search..">
+                                            <a href="">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <ul class="list-inline float-right mb-0 mr-3">
+                                <!-- language-->
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                        aria-expanded="false">
+                                        <i class="ti-email noti-icon"></i>
+
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="list-inline menu-left mb-0">
+                                <li class="float-left">
+                                    <button class="button-menu-mobile open-left waves-light waves-effect">
+                                        <i class="mdi mdi-menu"></i>
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="clearfix"></div>
+
+                        </nav>
+
+                    </div>
+                    <!-- Top Bar End -->
+
